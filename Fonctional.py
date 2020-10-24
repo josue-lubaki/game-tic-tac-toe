@@ -16,6 +16,12 @@ def init_variable(pygame, screen, color):
     #boucle jusqu'à ce que l'utilisateur décide de fermer la fenêtre
     termine = False
     switch = True
+    return [switch,r1,r2,r3,r4,r5,r6,r7,r8,r9,termine]
+
+def init_case():
+    #boucle jusqu'à ce que l'utilisateur décide de fermer la fenêtre
+    termine = False
+    switch = True
     c1 = True
     c2 = True
     c3 = True
@@ -25,5 +31,4 @@ def init_variable(pygame, screen, color):
     c7 = True
     c8 = True
     c9 = True
-    return [r1,c1,r2,c2,r3,c3,r4,c4,r5,c5,r6,c6,r7,c7,r8,c8,r9,c9,switch,termine]
-        
+    return [False,c1,c2,c3,c4,c5,c6,c7,c8,c9]
