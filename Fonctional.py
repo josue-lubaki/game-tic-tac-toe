@@ -14,14 +14,10 @@ def init_variable(pygame, screen, color):
     r9 = pygame.draw.rect(screen, color, (375,375,150,150))
 
     #boucle jusqu'à ce que l'utilisateur décide de fermer la fenêtre
-    termine = False
-    switch = True
-    return [switch,r1,r2,r3,r4,r5,r6,r7,r8,r9,termine]
+    rect_circle_switch = True
+    return [rect_circle_switch,r1,r2,r3,r4,r5,r6,r7,r8,r9]
 
-def init_case():
-    #boucle jusqu'à ce que l'utilisateur décide de fermer la fenêtre
-    termine = False
-    switch = True
+def initialiser_case():
     c1 = True
     c2 = True
     c3 = True
