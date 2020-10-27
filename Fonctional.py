@@ -18,7 +18,7 @@ def init_variable(pygame, screen, color):
     rect_circle_switch = True
     return [rect_circle_switch,r1,r2,r3,r4,r5,r6,r7,r8,r9]
 
-# Reinitialisation des cases disponibles
+# Reinitialisation des 9 cases disponibles
 def initialiser_case():
     c1 = True
     c2 = True
@@ -120,6 +120,13 @@ def ConfirmationQuitter(pygame,fenetre_sortie):
         # Creation de deux cases pour le choix du symbole
         rec_1 = pygame.draw.rect(display_surface, blanc, (100,300,150,150))
         rec_2 = pygame.draw.rect(display_surface, blanc, (275,300,150,150))
+        # Dessiner les Symboles
+        # Symbole X
+        pygame.draw.line(display_surface, rouge,[109,300],[240,450], 20)
+        pygame.draw.line(display_surface, rouge,[240,300],[109,450], 20)
+        # Symbole O
+        pygame.draw.ellipse(display_surface, vert, [285,310,130,130], 30)
+
 
         # copying the text surface object 
         # to the display surface object  
