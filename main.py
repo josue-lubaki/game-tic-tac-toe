@@ -8,13 +8,14 @@ pygame.init()
 #  green, blue colour . 
 blue = (0, 0, 128) 
 noir = (0, 0 ,0)
-blanc = (255, 255, 255)
-vert =  (0, 255, 0)
-rouge = (255, 0, 0)
+blanc = (220, 220, 220)
+vert =  (34, 139, 34)
+rouge = (165, 42, 42)
 rouge_sombre = (153,0,0) 
 blue_sombre = (0,51,51)
 orange_sombre = (204,102,0)
 orange_claire = (255,128,0)
+dodger_blue = (30,144,255)
   
 # assigning values to X and Y variable 
 dimension = DimensionFenetre()
@@ -27,7 +28,7 @@ fenetre_sortie = pygame.display.set_mode((X,Y))
  
 # set the pygame window name 
 pygame.display.set_caption('TIC-TAC-TOE')
-icon = pygame.image.load("tic-tac-toe_32.png")
+icon = pygame.image.load("image/tic-tac-toe_32.png")
 pygame.display.set_icon(icon)
 
 # create a font object. 
@@ -81,7 +82,7 @@ while fin == True and arret == False:
                 fenetre.fill(blue_sombre) # color fond
                 # TEXT
                 text_sortie = font.render('Voulez-vous jouer de nouveau ?', True, orange_sombre)
-                text_3 = font_titre.render('OUI', True, vert, noir)
+                text_3 = font_titre.render('OUI', True, dodger_blue, noir)
                 text_4 = font_titre.render('NON', True, rouge_sombre,noir)
                 # Allouer l'espace necessaire pour le text
                 textRect_Sortie = text_sortie.get_rect() 
@@ -162,7 +163,7 @@ while fin == True and arret == False:
                             rec[0] = False
                         else:
                             # (100,100) le centre du circle, 50 rayon )        
-                            pygame.draw.ellipse(fenetre, vert, [35,35,130,130], 30)
+                            pygame.draw.ellipse(fenetre, dodger_blue, [35,35,130,130], 30)
                             rec[0] = True
                         case[1] = False  
                     
@@ -173,7 +174,7 @@ while fin == True and arret == False:
                             rec[0] = False
                         else:
                             # on ajoute 100 + 175 =275
-                            pygame.draw.ellipse(fenetre, vert, [210,35,130,130], 30)
+                            pygame.draw.ellipse(fenetre, dodger_blue, [210,35,130,130], 30)
                             rec[0] = True
                         case[2] = False
                     
@@ -183,7 +184,7 @@ while fin == True and arret == False:
                             pygame.draw.line(fenetre, rouge,[515,25],[384,174], 20)
                             rec[0] = False
                         else:
-                            pygame.draw.ellipse(fenetre, vert, [385,35,130,130], 30)
+                            pygame.draw.ellipse(fenetre, dodger_blue, [385,35,130,130], 30)
                             rec[0] = True
                         case[3] = False
                             
@@ -193,7 +194,7 @@ while fin == True and arret == False:
                             pygame.draw.line(fenetre, rouge,[165,200],[35,349], 20)
                             rec[0] = False
                         else:
-                            pygame.draw.ellipse(fenetre, vert, [35,210,130,130], 30)
+                            pygame.draw.ellipse(fenetre, dodger_blue, [35,210,130,130], 30)
                             rec[0] = True
                         case[4] = False
                         
@@ -203,7 +204,7 @@ while fin == True and arret == False:
                             pygame.draw.line(fenetre, rouge,[339,200],[210,349], 20)
                             rec[0] = False
                         else:
-                            pygame.draw.ellipse(fenetre, vert, [210,210,130,130], 30)
+                            pygame.draw.ellipse(fenetre, dodger_blue, [210,210,130,130], 30)
                             rec[0] = True
                         case[5] = False
                     
@@ -213,7 +214,7 @@ while fin == True and arret == False:
                             pygame.draw.line(fenetre, rouge,[514,200],[384,349], 20)
                             rec[0] = False
                         else:
-                            pygame.draw.ellipse(fenetre, vert, [385,210,130,130], 30)
+                            pygame.draw.ellipse(fenetre, dodger_blue, [385,210,130,130], 30)
                             rec[0] = True
                         case[6] = False
                         
@@ -223,7 +224,7 @@ while fin == True and arret == False:
                             pygame.draw.line(fenetre, rouge,[164,375],[35,524], 20)
                             rec[0] = False
                         else:
-                            pygame.draw.ellipse(fenetre, vert, [35,385,130,130], 30)
+                            pygame.draw.ellipse(fenetre, dodger_blue, [35,385,130,130], 30)
                             rec[0] = True
                         case[7] = False
                     
@@ -233,7 +234,7 @@ while fin == True and arret == False:
                             pygame.draw.line(fenetre, rouge,[339,375],[210,524], 20)
                             rec[0] = False
                         else:
-                            pygame.draw.ellipse(fenetre, vert, [210,385,130,130], 30)
+                            pygame.draw.ellipse(fenetre, dodger_blue, [210,385,130,130], 30)
                             rec[0] = True
                         case[8] = False
 
@@ -243,7 +244,7 @@ while fin == True and arret == False:
                             pygame.draw.line(fenetre, rouge,[514,375],[384,524], 20)
                             rec[0] = False
                         else:
-                            pygame.draw.ellipse(fenetre, vert, [385,385,130,130], 30)
+                            pygame.draw.ellipse(fenetre, dodger_blue, [385,385,130,130], 30)
                             rec[0] = True
                         case[9] = False
 
