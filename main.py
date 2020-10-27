@@ -17,8 +17,9 @@ orange_sombre = (204,102,0)
 orange_claire = (255,128,0)
   
 # assigning values to X and Y variable 
-X = 550
-Y = 550
+dimension = DimensionFenetre()
+X = dimension[0]
+Y = dimension[1]
   
 # create the display surface object 
 # of specific dimension..e(X, Y).
