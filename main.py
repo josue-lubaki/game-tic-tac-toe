@@ -129,11 +129,17 @@ while fin == True and arret == False:
                         PlayingMachine = False
                         break
                     elif rec_t2.collidepoint(position): # veux Sortir
-                        is_running = False
-                        fin = True
-                        arret = True
-                        mauvaisPointer = False
-                        break
+                        # LOGIQUE DU MENU DU JEU
+                        Control_Quit = ConfirmationQuitter(pygame,fenetre)
+                        choixUser = Control_Quit[0]
+                        fin = Control_Quit[1]
+                        arret = Control_Quit[2]
+                        if fin == True and arret == True:
+                            is_running = False
+                            mauvaisPointer = False
+                            break
+                        else:
+                            mauvaisPointer = False
                     else: # Au cas où on cliquait sur un autre endroit que Oui ou Non
                         fin = True
                         arret = False
@@ -178,6 +184,12 @@ while fin == True and arret == False:
         pygame.display.flip()      
         horloge.tick()
     else:
-        pass
+        Copyright(pygame,font)
+        pygame.display.update()
 if(fin == True and arret == True):
-    pygame.quit()
+        Copyright(pygame,font)   
+        tick = 0
+        while tick < 30:
+            horloge.tick(10)
+            tick += 1
+        pygame.quit()
