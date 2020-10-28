@@ -1,12 +1,14 @@
 import pygame
 import random
-# importation du fichier Fonctional (contenant les Fonctions)
-from Fonctional import *
+# importation des fichiers
+from Fonctional_Joueur import *
+from Fonctional_machine import *
+from Smart_Machine import Reflexion_Machine
+from Smart_Joueur import Reflexion_Joueur
  
 pygame.init() 
   
-# define the RGB value for white, 
-#  green, blue colour . 
+# define the RGB value for white, green, blue colour,... 
 blue = (0, 0, 128) 
 noir = (0, 0 ,0)
 blanc = (220, 220, 220)
@@ -28,7 +30,7 @@ Y = dimension[1]
 fenetre_sortie = pygame.display.set_mode((X,Y))
 
 
-# set the pygame window name 
+# set the pygame window name and icon
 pygame.display.set_caption('TIC-TAC-TOE')
 icon = pygame.image.load("image/tic-tac-toe_32.png")
 pygame.display.set_icon(icon)
@@ -41,21 +43,22 @@ font_titre = pygame.font.Font('freesansbold.ttf', 38)
 font = pygame.font.Font('freesansbold.ttf', 32) 
 font_info = pygame.font.Font('freesansbold.ttf', 24) 
 
-# LOGIQUE DU MENU DU JEU
+# LOGIQUE DU MENU DU JEU @see ConfirmationQuitter
 Control_Quit = ConfirmationQuitter(pygame,fenetre_sortie)
 choixUser = Control_Quit[0]
 fin = Control_Quit[1]
 arret = Control_Quit[2]
 
 # Connaitre le Joueur suivant à chaque tour
-PlayingJoueur = True # C'est tjrs les Users qui commencent...
+PlayingJoueur = True # C'est tjrs les Users qui commencent... @True
 PlayingMachine = False
 
+# Si l'Utilisateur pointe sur n'importe quel élement non traité dans le code
 mauvaisPointer = False
 #attention a C de Clock
 horloge = pygame.time.Clock()
 
-# CHECKER LE CHOIX DU USER (code ici) 
+# CHECKER LE CHOIX DU USER
 while fin == True and arret == False:
     # Création de la fenetre de Jeu
     fenetre = pygame.display.set_mode((X,Y))
@@ -63,6 +66,8 @@ while fin == True and arret == False:
     # Initialisation des variables pour le jeu
     case = initialiser_case()
     rec = init_variable(pygame, fenetre, blanc)
+    playedCase = init_JoueurPlayedCase()
+    MachineCase = init_MachinePlayedCase()
     is_running = True
     rejouer = False
 
@@ -76,8 +81,11 @@ while fin == True and arret == False:
             # Initialisation des variables pour le jeu
             case = initialiser_case()
             rec = init_variable(pygame, fenetre, blanc)
+            playedCase = init_JoueurPlayedCase()
+            MachineCase = init_MachinePlayedCase()
             rejouer = False
             if mauvaisPointer == True:
+                # Garder les cases occupées
                 case[1:] = [False,False,False,False,False,False,False,False,False]
                 mauvaisPointer = False
 
@@ -116,6 +124,9 @@ while fin == True and arret == False:
                         is_running = True
                         rejouer = True
                         mauvaisPointer = False
+                        # C'est toujours L'utilisateur qui commence
+                        PlayingJoueur = True
+                        PlayingMachine = False
                         break
                     elif rec_t2.collidepoint(position): # veux Sortir
                         is_running = False
@@ -143,219 +154,28 @@ while fin == True and arret == False:
                 if fin == True and arret == True:
                     is_running = False
                     break
-            
-            # S'il existe au moins une case vide | Tour Joeur
-            if ((case[1] == True or case[2] == True or case[3] == True or case[4] == True 
-            or case[5] == True or case[6] == True or case[7] == True or case[8] == True or
-            case[9] == True) and PlayingJoueur == True and PlayingMachine == False):
-                # Affichage du choix de l'Utilisateur
-                texte = font_info.render('Vous êtes --> '+ choixUser,True,noir,orange_sombre) 
-                # create a rectangular object for the 
-                # text surface object 
-                textRect = texte.get_rect()
-                # copying the text surface object 
-                # to the display surface object 
-                fenetre.blit(texte, textRect) 
-                UserPlayed = False # l'Utilisateur n'a pas encore joué
-                #LOGIQUE DU JEU
-                if event.type == pygame.MOUSEBUTTONUP:
-                    pos = pygame.mouse.get_pos()
-                    print(pos, " - Choix Rectangle")
 
-                    # rec[1] à rec[9] correspondent aux rectangles
-                    if rec[1].collidepoint(pos) and case[1]:
-                        if choixUser == "X":
-                                pygame.draw.line(fenetre, rouge,[35,25],[165,174], 20)
-                                pygame.draw.line(fenetre, rouge,[165,25],[35,174], 20)
-                        else:
-                            # (100,100) le centre du circle, 50 rayon )        
-                            pygame.draw.ellipse(fenetre, dodger_blue, [35,35,130,130], 30)
-                        PlayingMachine = True # à la machine de jouer
-                        PlayingJoueur = False
-                        case[1] = False
-                    
-                    if rec[2].collidepoint(pos) and case[2]:
-                        if choixUser == "X":
-                            pygame.draw.line(fenetre, rouge,[210,25],[339,174], 20)
-                            pygame.draw.line(fenetre, rouge,[339,25],[210,174], 20)
-                        else:
-                            # on ajoute 100 + 175 =275
-                            pygame.draw.ellipse(fenetre, dodger_blue, [210,35,130,130], 30)
-                        PlayingMachine = True # à la machine de jouer
-                        PlayingJoueur = False
-                        case[2] = False
-                    
-                    if rec[3].collidepoint(pos) and case[3] :
-                        if choixUser == "X":
-                            if rec[0] == True :
-                                pygame.draw.line(fenetre, rouge,[385,25],[514,174], 20)
-                                pygame.draw.line(fenetre, rouge,[515,25],[384,174], 20)
-                        else:
-                            pygame.draw.ellipse(fenetre, dodger_blue, [385,35,130,130], 30)
-                        PlayingMachine = True # à la machine de jouer
-                        PlayingJoueur = False
-                        case[3] = False
-                            
-                    if rec[4].collidepoint(pos) and case[4] :
-                        if choixUser == "X":
-                            if rec[0] == True :
-                                pygame.draw.line(fenetre, rouge,[35,200],[165,349], 20)
-                                pygame.draw.line(fenetre, rouge,[165,200],[35,349], 20)
-                        else:
-                            pygame.draw.ellipse(fenetre, dodger_blue, [35,210,130,130], 30)
-                        PlayingMachine = True # à la machine de jouer
-                        PlayingJoueur = False
-                        case[4] = False
-                        
-                    if rec[5].collidepoint(pos) and case[5]:
-                        if choixUser == "X":
-                            if rec[0] == True :
-                                pygame.draw.line(fenetre, rouge,[210,200],[339,349], 20)
-                                pygame.draw.line(fenetre, rouge,[339,200],[210,349], 20)
-                        else:
-                            pygame.draw.ellipse(fenetre, dodger_blue, [210,210,130,130], 30)
-                        PlayingMachine = True # à la machine de jouer
-                        PlayingJoueur = False
-                        case[5] = False
-                    
-                    if rec[6].collidepoint(pos) and case[6]:
-                        if choixUser == "X":
-                            if rec[0] == True :
-                                pygame.draw.line(fenetre, rouge,[385,200],[514,349], 20)
-                                pygame.draw.line(fenetre, rouge,[514,200],[384,349], 20)
-                        else:
-                            pygame.draw.ellipse(fenetre, dodger_blue, [385,210,130,130], 30)
-                        PlayingMachine = True # à la machine de jouer
-                        PlayingJoueur = False
-                        case[6] = False
-                        
-                    if rec[7].collidepoint(pos) and case[7]:
-                        if choixUser == "X":
-                            if rec[0] == True :
-                                pygame.draw.line(fenetre, rouge,[35,375],[164,524], 20)
-                                pygame.draw.line(fenetre, rouge,[164,375],[35,524], 20)
-                        else:
-                            pygame.draw.ellipse(fenetre, dodger_blue, [35,385,130,130], 30)
-                        PlayingMachine = True # à la machine de jouer
-                        PlayingJoueur = False
-                        case[7] = False
-                    
-                    if rec[8].collidepoint(pos) and case[8]:
-                        if choixUser == "X":
-                            if rec[0] == True :
-                                pygame.draw.line(fenetre, rouge,[210,375],[339,524], 20)
-                                pygame.draw.line(fenetre, rouge,[339,375],[210,524], 20)
-                        else:
-                            pygame.draw.ellipse(fenetre, dodger_blue, [210,385,130,130], 30)
-                        PlayingMachine = True # à la machine de jouer
-                        PlayingJoueur = False
-                        case[8] = False
+            # Au Tour du User de choisir une case vide
+            Reflexion_User = Reflexion_Joueur(pygame,event,fenetre,case,choixUser,playedCase,
+            PlayingJoueur,PlayingMachine,rec,font_info,rouge,blanc,dodger_blue)            
+            # Modifier le tour | Prochain Joueur
+            PlayingMachine = Reflexion_User[0] # True
+            PlayingJoueur = Reflexion_User[1] # False
 
-                    if rec[9].collidepoint(pos) and case[9]:
-                        if choixUser == "X":
-                            if rec[0] == True :
-                                pygame.draw.line(fenetre, rouge,[385,375],[514,524], 20)
-                                pygame.draw.line(fenetre, rouge,[514,375],[384,524], 20)
-                        else:
-                            pygame.draw.ellipse(fenetre, dodger_blue, [385,385,130,130], 30)
-                        PlayingMachine = True # à la machine de jouer
-                        PlayingJoueur = False
-                        case[9] = False
+            # La Machine Reflechie, comment Gagner le jeu
+            # ou au pire, comment contrer le Joueur
+            Reflexion = Reflexion_Machine(pygame,fenetre,case,choixUser,
+            MachineCase,playedCase,PlayingMachine,PlayingJoueur,machine_Joue,switching_O,switching_X,random)
+            # Modifier le tour | Prochain Joueur
+            PlayingMachine = Reflexion[0] # False
+            PlayingJoueur = Reflexion[1] # True
             
-            pygame.display.update()
-            #20 images par seconde, 10 moin vite que 20        
+            # Mise à jour des contenues
+            pygame.display.update()      
             horloge.tick()
 
-            # S'il existe au moins une case vide | Tour Machine
-            if ((case[1] == True or case[2] == True or case[3] == True or case[4] == True 
-                or case[5] == True or case[6] == True or case[7] == True or case[8] == True or
-                case[9] == True) and PlayingMachine == True and PlayingJoueur == False):
-                    listeIndiceCaseVide = []
-                    listeIndiceRandomise = []
-                    a = 1
-                    for a in range(len(case)):
-                        if(case[a] == True):
-                            listeIndiceCaseVide.append(a) # indice : 2,4,7...
-                    while PlayingMachine == True :
-                        # Randomiser la liste
-                        while len(listeIndiceCaseVide) != 0 :
-                            tailleListe = len(listeIndiceCaseVide)
-                            chiffreRandom = random.randint(0,tailleListe-1)
-                            IndiceRandom = listeIndiceCaseVide[chiffreRandom] # 2,4,7...
-                            listeIndiceRandomise.append(IndiceRandom)
-                            del listeIndiceCaseVide[chiffreRandom]
-                        # Demander à la machine de Jouer
-                        # Prendre une case au hasard et coché
-                        if (len(listeIndiceRandomise) != 0):
-                            indiceCaseRandom = random.choice(listeIndiceRandomise)
-                            # Verifier si la case et occupé ou pas
-                            if case[indiceCaseRandom] == True:
-                                if choixUser == "X":
-                                    if indiceCaseRandom == 1:
-                                        pygame.draw.ellipse(fenetre, dodger_blue, [35,35,130,130], 30)
-                                    elif indiceCaseRandom == 2:
-                                        pygame.draw.ellipse(fenetre, dodger_blue, [210,35,130,130], 30)
-                                    elif indiceCaseRandom == 3:
-                                        pygame.draw.ellipse(fenetre, dodger_blue, [385,35,130,130], 30)
-                                    elif indiceCaseRandom == 4:
-                                        pygame.draw.ellipse(fenetre, dodger_blue, [35,210,130,130], 30)
-                                    elif indiceCaseRandom == 5:
-                                        pygame.draw.ellipse(fenetre, dodger_blue, [210,210,130,130], 30)
-                                    elif indiceCaseRandom == 6:
-                                        pygame.draw.ellipse(fenetre, dodger_blue, [385,210,130,130], 30)
-                                    elif indiceCaseRandom == 7:
-                                        pygame.draw.ellipse(fenetre, dodger_blue, [35,385,130,130], 30)
-                                    elif indiceCaseRandom == 8:
-                                        pygame.draw.ellipse(fenetre, dodger_blue, [210,385,130,130], 30)
-                                    elif indiceCaseRandom == 9:
-                                        pygame.draw.ellipse(fenetre, dodger_blue, [385,385,130,130], 30)
-                                    else:
-                                        print("Je ne sais pas sur quelle case dessinée")
-
-                                    case[indiceCaseRandom] = False
-                                    PlayingMachine = False
-                                    PlayingJoueur = True
-                                    break
-                                elif choixUser == "O":
-                                    if indiceCaseRandom == 1:
-                                        pygame.draw.line(fenetre, rouge,[35,25],[165,174], 20)
-                                        pygame.draw.line(fenetre, rouge,[165,25],[35,174], 20)
-                                    elif indiceCaseRandom == 2:
-                                        pygame.draw.line(fenetre, rouge,[210,25],[339,174], 20)
-                                        pygame.draw.line(fenetre, rouge,[339,25],[210,174], 20)
-                                    elif indiceCaseRandom == 3:
-                                        pygame.draw.line(fenetre, rouge,[385,25],[514,174], 20)
-                                        pygame.draw.line(fenetre, rouge,[515,25],[384,174], 20)
-                                    elif indiceCaseRandom == 4:
-                                        pygame.draw.line(fenetre, rouge,[35,200],[165,349], 20)
-                                        pygame.draw.line(fenetre, rouge,[165,200],[35,349], 20)
-                                    elif indiceCaseRandom == 5:
-                                        pygame.draw.line(fenetre, rouge,[210,200],[339,349], 20)
-                                        pygame.draw.line(fenetre, rouge,[339,200],[210,349], 20)
-                                    elif indiceCaseRandom == 6:
-                                        pygame.draw.line(fenetre, rouge,[385,200],[514,349], 20)
-                                        pygame.draw.line(fenetre, rouge,[514,200],[384,349], 20)
-                                    elif indiceCaseRandom == 7:
-                                        pygame.draw.line(fenetre, rouge,[35,375],[164,524], 20)
-                                        pygame.draw.line(fenetre, rouge,[164,375],[35,524], 20)
-                                    elif indiceCaseRandom == 8:
-                                        pygame.draw.line(fenetre, rouge,[210,375],[339,524], 20)
-                                        pygame.draw.line(fenetre, rouge,[339,375],[210,524], 20)
-                                    elif indiceCaseRandom == 9:
-                                        pygame.draw.line(fenetre, rouge,[385,375],[514,524], 20)
-                                        pygame.draw.line(fenetre, rouge,[514,375],[384,524], 20)
-                                    else:
-                                        print("Je ne sais pas sur quelle case dessinée")
-
-                                    case[indiceCaseRandom] = False
-                                    PlayingMachine = False
-                                    PlayingJoueur = True
-                                    break
-                                else:
-                                    PlayingMachine = True
-                                    print("Je ne sais pas sur quelle case dessinée")
-        pygame.display.flip()
-        #20 images par seconde, 10 moin vite que 20        
+        # Mise à jour de tous les dessins (Rectangles)
+        pygame.display.flip()      
         horloge.tick()
     else:
         pass
