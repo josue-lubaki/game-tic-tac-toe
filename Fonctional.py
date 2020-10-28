@@ -15,7 +15,7 @@ def init_variable(pygame, screen, color):
     r9 = pygame.draw.rect(screen, color, (375,375,150,150))
 
     #boucle jusqu'à ce que l'utilisateur décide de fermer la fenêtre
-    rect_circle_switch = True
+    rect_circle_switch = True # pas utilisé dans le cadre de ce devoir
     return [rect_circle_switch,r1,r2,r3,r4,r5,r6,r7,r8,r9]
 
 # Reinitialisation des 9 cases disponibles
@@ -199,3 +199,58 @@ def ConfirmationQuitter(pygame,fenetre_sortie):
             pygame.display.update()
             horloge.tick()
     return [choixUser,fin,arret]
+
+# Dessiner Symbole O
+def switching_O(pygame,fenetre,indice):
+    if indice == 1:
+        pygame.draw.ellipse(fenetre, dodger_blue, [35,35,130,130], 30)
+    elif indice == 2:
+        pygame.draw.ellipse(fenetre, dodger_blue, [210,35,130,130], 30)
+    elif indice == 3:
+        pygame.draw.ellipse(fenetre, dodger_blue, [385,35,130,130], 30)
+    elif indice == 4:
+        pygame.draw.ellipse(fenetre, dodger_blue, [35,210,130,130], 30)
+    elif indice == 5:
+        pygame.draw.ellipse(fenetre, dodger_blue, [210,210,130,130], 30)
+    elif indice == 6:
+        pygame.draw.ellipse(fenetre, dodger_blue, [385,210,130,130], 30)
+    elif indice == 7:
+        pygame.draw.ellipse(fenetre, dodger_blue, [35,385,130,130], 30)
+    elif indice == 8:
+        pygame.draw.ellipse(fenetre, dodger_blue, [210,385,130,130], 30)
+    elif indice == 9:
+        pygame.draw.ellipse(fenetre, dodger_blue, [385,385,130,130], 30)
+    else:
+        print("Je ne sais pas sur quelle case dessinée")
+
+# Dessiner symbole X
+def switching_X(pygame,fenetre,indice):
+    if indice == 1:
+        pygame.draw.line(fenetre, rouge,[35,25],[165,174], 20)
+        pygame.draw.line(fenetre, rouge,[165,25],[35,174], 20)
+    elif indice == 2:
+        pygame.draw.line(fenetre, rouge,[210,25],[339,174], 20)
+        pygame.draw.line(fenetre, rouge,[339,25],[210,174], 20)
+    elif indice == 3:
+        pygame.draw.line(fenetre, rouge,[385,25],[514,174], 20)
+        pygame.draw.line(fenetre, rouge,[515,25],[384,174], 20)
+    elif indice == 4:
+        pygame.draw.line(fenetre, rouge,[35,200],[165,349], 20)
+        pygame.draw.line(fenetre, rouge,[165,200],[35,349], 20)
+    elif indice == 5:
+        pygame.draw.line(fenetre, rouge,[210,200],[339,349], 20)
+        pygame.draw.line(fenetre, rouge,[339,200],[210,349], 20)
+    elif indice == 6:
+        pygame.draw.line(fenetre, rouge,[385,200],[514,349], 20)
+        pygame.draw.line(fenetre, rouge,[514,200],[384,349], 20)
+    elif indice == 7:
+        pygame.draw.line(fenetre, rouge,[35,375],[164,524], 20)
+        pygame.draw.line(fenetre, rouge,[164,375],[35,524], 20)
+    elif indice == 8:
+        pygame.draw.line(fenetre, rouge,[210,375],[339,524], 20)
+        pygame.draw.line(fenetre, rouge,[339,375],[210,524], 20)
+    elif indice == 9:
+        pygame.draw.line(fenetre, rouge,[385,375],[514,524], 20)
+        pygame.draw.line(fenetre, rouge,[514,375],[384,524], 20)
+    else:
+        print("Je ne sais pas sur quelle case dessinée")
