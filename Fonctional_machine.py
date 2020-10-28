@@ -1,4 +1,5 @@
 # Ce fihier Contient des fonctions Utiles pour la machine, comment elle reagit face au jeu
+from Fonctional_Joueur import DimensionFenetre
 
 # Reinitialisation des cases jouées par les users
 def init_JoueurPlayedCase():
@@ -109,3 +110,21 @@ def machine_Joue(pygame,fenetre,case,i,choixUser,PlayingMachine,PlayingJoueur):
             PlayingJoueur = True
             _break = True
     return [PlayingMachine,PlayingJoueur,_break]
+
+def Copyright(pygame,font):
+    # Dimension fenetre
+    dimension = DimensionFenetre()
+    X = dimension[0]
+    Y = dimension[1]
+    fenetre_quit = pygame.display.set_mode((X,Y)) # definition fenetre_quit
+    # Coder ici | User veut partir | text de confirmation
+    fenetre_quit.fill(blue_sombre) # color fond
+    # TEXT
+    text_sortie = font.render('Copyright 2020 - Josue Lubaki', True, noir ,orange_sombre)
+    # Allouer l'espace necessaire pour le text
+    textRect_Sortie = text_sortie.get_rect() 
+    # Positionner les Textes dans la Page
+    textRect_Sortie.center = (X // 2, Y // 2)
+    fenetre_quit.blit(text_sortie, textRect_Sortie)
+    # Mise à jour des contenues
+    pygame.display.update()
