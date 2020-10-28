@@ -2,8 +2,8 @@
 def init_variable(pygame, screen, color):
     # on ajout 175 à x donc on commence par 25, 25+175 = 200, 200+175=  375
     r1 = pygame.draw.rect(screen, color, (25,25,150,150))
-    # (255,255,255) coleur color, on change x a 200 
-    r2 = pygame.draw.rect(screen, (255,255,255), (200,25,150,150))
+    # on change x a 200 
+    r2 = pygame.draw.rect(screen, color, (200,25,150,150))
     r3 = pygame.draw.rect(screen, color, (375,25,150,150))
     #y starts at 200
     r4 = pygame.draw.rect(screen, color, (25,200,150,150))
@@ -15,7 +15,7 @@ def init_variable(pygame, screen, color):
     r9 = pygame.draw.rect(screen, color, (375,375,150,150))
 
     #boucle jusqu'à ce que l'utilisateur décide de fermer la fenêtre
-    rect_circle_switch = True
+    rect_circle_switch = True # pas utilisé dans le cadre de ce devoir
     return [rect_circle_switch,r1,r2,r3,r4,r5,r6,r7,r8,r9]
 
 # Reinitialisation des 9 cases disponibles
@@ -47,13 +47,14 @@ def DimensionFenetre():
 # Les diffrentes Couleurs Utilisés pour les Fonctions
 blue = (0, 0, 128) 
 noir = (0, 0 ,0)
-blanc = (255, 255, 255)
-vert =  (0, 255, 0)
-rouge = (255, 0, 0)
+blanc = (220, 220, 220)
+vert =  (34, 139, 34)
+rouge = (165, 42, 42)
 rouge_sombre = (153,0,0) 
 blue_sombre = (0,51,51)
 orange_sombre = (204,102,0)
 orange_claire = (255,128,0)
+dodger_blue = (30,144,255)
 
 # Fonction demandant à l'Utilisateur de choisir son symbole (X|O)
 def AskChoixUser(pygame,event,fenetre,rec_1,rec_2):
@@ -103,12 +104,14 @@ def ConfirmationQuitter(pygame,fenetre_sortie):
     # text surface object 
     textRect = text.get_rect() 
     textRect_2 = text_2.get_rect() 
+    rec_logo = pygame.draw.rect(display_surface, blanc, (200,125,128,128))
 
     #attention a C de Clock
     horloge = pygame.time.Clock()
     # set the center of the rectangular object. 
-    textRect.center = (X // 2, Y // 5) 
+    textRect.center = (X // 2, Y // 7) 
     textRect_2.center = (X // 2, Y // 2)
+    rec_logo.center = (X//2,Y/3.15)
 
     fin = False
     choixUser = "Y" 
@@ -119,18 +122,20 @@ def ConfirmationQuitter(pygame,fenetre_sortie):
         display_surface.fill(blue_sombre)
         # Creation de deux cases pour le choix du symbole
         rec_1 = pygame.draw.rect(display_surface, blanc, (100,300,150,150))
-        rec_2 = pygame.draw.rect(display_surface, blanc, (275,300,150,150))
+        rec_2 = pygame.draw.rect(display_surface, blanc, (300,300,150,150))
         # Dessiner les Symboles
         # Symbole X
         pygame.draw.line(display_surface, rouge,[109,300],[240,450], 20)
         pygame.draw.line(display_surface, rouge,[240,300],[109,450], 20)
         # Symbole O
-        pygame.draw.ellipse(display_surface, vert, [285,310,130,130], 30)
-
+        pygame.draw.ellipse(display_surface, dodger_blue, [310,310,130,130], 30)
+        # Logo du Jeu au Centre
+        logo = pygame.image.load("image/tic-tac-toe_2_128.png")
 
         # copying the text surface object 
         # to the display surface object  
         # at the center coordinate. 
+        display_surface.blit(logo, rec_logo)
         display_surface.blit(text, textRect) 
         display_surface.blit(text_2, textRect_2) 
         
@@ -153,7 +158,7 @@ def ConfirmationQuitter(pygame,fenetre_sortie):
                 fenetre_sortie.fill(blue_sombre) # color fond
                 # TEXT
                 text_sortie = font.render('Voulez-vous Quitter la Partie ?', True, orange_sombre)
-                text_3 = font_titre.render('OUI', True, vert, noir)
+                text_3 = font_titre.render('OUI', True, dodger_blue, noir)
                 text_4 = font_titre.render('NON', True, rouge_sombre,noir)
                 # Allouer l'espace necessaire pour le text
                 textRect_Sortie = text_sortie.get_rect() 
@@ -194,3 +199,58 @@ def ConfirmationQuitter(pygame,fenetre_sortie):
             pygame.display.update()
             horloge.tick()
     return [choixUser,fin,arret]
+
+# Dessiner Symbole O
+def switching_O(pygame,fenetre,indice):
+    if indice == 1:
+        pygame.draw.ellipse(fenetre, dodger_blue, [35,35,130,130], 30)
+    elif indice == 2:
+        pygame.draw.ellipse(fenetre, dodger_blue, [210,35,130,130], 30)
+    elif indice == 3:
+        pygame.draw.ellipse(fenetre, dodger_blue, [385,35,130,130], 30)
+    elif indice == 4:
+        pygame.draw.ellipse(fenetre, dodger_blue, [35,210,130,130], 30)
+    elif indice == 5:
+        pygame.draw.ellipse(fenetre, dodger_blue, [210,210,130,130], 30)
+    elif indice == 6:
+        pygame.draw.ellipse(fenetre, dodger_blue, [385,210,130,130], 30)
+    elif indice == 7:
+        pygame.draw.ellipse(fenetre, dodger_blue, [35,385,130,130], 30)
+    elif indice == 8:
+        pygame.draw.ellipse(fenetre, dodger_blue, [210,385,130,130], 30)
+    elif indice == 9:
+        pygame.draw.ellipse(fenetre, dodger_blue, [385,385,130,130], 30)
+    else:
+        print("Je ne sais pas sur quelle case dessinée")
+
+# Dessiner symbole X
+def switching_X(pygame,fenetre,indice):
+    if indice == 1:
+        pygame.draw.line(fenetre, rouge,[35,25],[165,174], 20)
+        pygame.draw.line(fenetre, rouge,[165,25],[35,174], 20)
+    elif indice == 2:
+        pygame.draw.line(fenetre, rouge,[210,25],[339,174], 20)
+        pygame.draw.line(fenetre, rouge,[339,25],[210,174], 20)
+    elif indice == 3:
+        pygame.draw.line(fenetre, rouge,[385,25],[514,174], 20)
+        pygame.draw.line(fenetre, rouge,[515,25],[384,174], 20)
+    elif indice == 4:
+        pygame.draw.line(fenetre, rouge,[35,200],[165,349], 20)
+        pygame.draw.line(fenetre, rouge,[165,200],[35,349], 20)
+    elif indice == 5:
+        pygame.draw.line(fenetre, rouge,[210,200],[339,349], 20)
+        pygame.draw.line(fenetre, rouge,[339,200],[210,349], 20)
+    elif indice == 6:
+        pygame.draw.line(fenetre, rouge,[385,200],[514,349], 20)
+        pygame.draw.line(fenetre, rouge,[514,200],[384,349], 20)
+    elif indice == 7:
+        pygame.draw.line(fenetre, rouge,[35,375],[164,524], 20)
+        pygame.draw.line(fenetre, rouge,[164,375],[35,524], 20)
+    elif indice == 8:
+        pygame.draw.line(fenetre, rouge,[210,375],[339,524], 20)
+        pygame.draw.line(fenetre, rouge,[339,375],[210,524], 20)
+    elif indice == 9:
+        pygame.draw.line(fenetre, rouge,[385,375],[514,524], 20)
+        pygame.draw.line(fenetre, rouge,[514,375],[384,524], 20)
+    else:
+        print("Je ne sais pas sur quelle case dessinée")
