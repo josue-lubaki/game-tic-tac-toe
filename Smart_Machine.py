@@ -1,5 +1,7 @@
 from Fonctional_machine import machine_Joue, switching_O, switching_X
-
+#********************************************************
+#               @Author : Josue Lubaki
+#********************************************************
 # La Machine Reflechie, comment Gagner le jeu
 # ou au pire, comment contrer le Joueur
 

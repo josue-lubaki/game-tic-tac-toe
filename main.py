@@ -5,7 +5,9 @@ from Fonctional_Joueur import *
 from Fonctional_machine import *
 from Smart_Machine import Reflexion_Machine
 from Smart_Joueur import Reflexion_Joueur
- 
+#********************************************************
+#               @Author : Josue Lubaki
+#********************************************************
 pygame.init() 
   
 # define the RGB value for white, green, blue colour,... 
