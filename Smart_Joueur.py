@@ -1,11 +1,18 @@
 def Reflexion_Joueur(pygame,event,fenetre,case,choixUser,playedCase,PlayingJoueur,PlayingMachine,rec,
-font_info,rouge,blanc,dodger_blue):
+font_info,rouge,blanc,dodger_blue,joueurWin,score):
+            monScore = "Score : " + str(score)
     # S'il existe au moins une case vide | Tour Joeur
             if ((case[1] == True or case[2] == True or case[3] == True or case[4] == True 
             or case[5] == True or case[6] == True or case[7] == True or case[8] == True or
-            case[9] == True) and PlayingJoueur == True and PlayingMachine == False):
+            case[9] == True or joueurWin) and PlayingJoueur == True and PlayingMachine == False):
                 # Affichage du choix de l'Utilisateur
-                texte = font_info.render('Score : 0',True,blanc,dodger_blue) 
+                maCouleur = (0,0,0)
+                if(choixUser == "X"):
+                    maCouleur = rouge
+                else:
+                    maCouleur = dodger_blue
+               
+                texte = font_info.render(monScore,True,blanc,maCouleur) 
                 # create a rectangular object for the 
                 # text surface object 
                 textRect = texte.get_rect()

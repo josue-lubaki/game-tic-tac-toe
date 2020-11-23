@@ -5,7 +5,7 @@ from Fonctional_machine import machine_Joue, switching_O, switching_X
 # La Machine Reflechie, comment Gagner le jeu
 # ou au pire, comment contrer le Joueur
 
-def Reflexion_Machine(pygame,fenetre,case,choixUser,MachineCase,playedCase,PlayingMachine,PlayingJoueur,machine_Joue,switching_O,switching_X,random):
+def Reflexion_Machine(pygame,fenetre,case,choixUser,MachineCase,playedCase,PlayingMachine,PlayingJoueur,machine_Joue,switching_O,switching_X,random,joueurWin):
             # S'il existe au moins une case vide | Tour Machine
             if ((case[1] == True or case[2] == True or case[3] == True or case[4] == True 
                 or case[5] == True or case[6] == True or case[7] == True or case[8] == True or
@@ -13,6 +13,12 @@ def Reflexion_Machine(pygame,fenetre,case,choixUser,MachineCase,playedCase,Playi
                     listeIndiceCaseVide = []
                     listeIndiceRandomise = []
                     a = 1
+
+                    #Verifier si le Joueur a gagné
+                    joueurWin = VerifierGagnant(pygame,fenetre,case,choixUser,MachineCase,playedCase,PlayingMachine,PlayingJoueur,machine_Joue,joueurWin)
+                    if(joueurWin):
+                        return [False,False,joueurWin]
+
                     # Liste Case Vide
                     for a in range(len(case)):
                         if(case[a] == True):
@@ -261,4 +267,102 @@ def Reflexion_Machine(pygame,fenetre,case,choixUser,MachineCase,playedCase,Playi
                                             PlayingMachine = True
                                             print("Je ne sais pas sur quelle case dessinée")
             # A Qui le prochain tour @see return
-            return [PlayingMachine,PlayingJoueur]
+            return [PlayingMachine,PlayingJoueur,joueurWin]
+
+def VerifierGagnant(pygame,fenetre,case,choixUser,MachineCase,playedCase,PlayingMachine,PlayingJoueur,machine_Joue,joueurWin, machineWin):
+    # Verifier si le Joueur a gagné
+                            if (((case[1] == False and playedCase[1]) and (case[2] == False and playedCase[2]) 
+                                and (case[3] == False and playedCase[3])) or ((case[1] == False and playedCase[1]) and (case[3] == False 
+                                and playedCase[3]) and (case[2] == False and playedCase[2])) or ((case[2] == False and playedCase[2]) 
+                                and (case[3] == False and playedCase[3]) and (case[1] == False and playedCase[1]))):
+                                joueurWin = True
+                            elif (((case[1] == False and machineWin[1]) and (case[2] == False and machineWin[2]) 
+                                and (case[3] == False and machineWin[3])) or ((case[1] == False and machineWin[1]) and (case[3] == False 
+                                and machineWin[3]) and (case[2] == False and machineWin[2])) or ((case[2] == False and machineWin[2]) 
+                                and (case[3] == False and machineWin[3]) and (case[1] == False and machineWin[1]))):
+                                machineWin = True
+                            elif (((case[1] == False and playedCase[1]) and (case[4] == False and playedCase[4]) 
+                                and (case[7] == False and playedCase[7])) or ((case[1] == False and playedCase[1]) 
+                                and (case[7] == False and playedCase[7]) and (case[4] and playedCase[4])) or
+                                ((case[4] == False and playedCase[4]) and (case[7] == False and playedCase[7]) 
+                                and (case[1] == False and playedCase[1]))):
+                                joueurWin = True
+                            elif (((case[1] == False and machineWin[1]) and (case[4] == False and machineWin[4]) 
+                                and (case[7] == False and machineWin[7])) or ((case[1] == False and machineWin[1]) 
+                                and (case[7] == False and machineWin[7]) and (case[4] and machineWin[4])) or
+                                ((case[4] == False and machineWin[4]) and (case[7] == False and machineWin[7]) 
+                                and (case[1] == False and machineWin[1]))):
+                                machineWin = True
+                            elif (((case[1] == False and playedCase[1]) and (case[5] == False and playedCase[5]) 
+                                and (case[9] == False and playedCase[9])) or ((case[1] == False and playedCase[1]) 
+                                and (case[9] == False and playedCase[9]) and (case[5] == False and playedCase[5])) or
+                                ((case[5] == False and playedCase[5]) and (case[9] == False and playedCase[9]) 
+                                and (case[1] == False and playedCase[1]))):
+                                joueurWin = True
+                            elif (((case[1] == False and machineWin[1]) and (case[5] == False and machineWin[5]) 
+                                and (case[9] == False and machineWin[9])) or ((case[1] == False and machineWin[1]) 
+                                and (case[9] == False and machineWin[9]) and (case[5] == False and machineWin[5])) or
+                                ((case[5] == False and machineWin[5]) and (case[9] == False and machineWin[9]) 
+                                and (case[1] == False and machineWin[1]))):
+                                machineWin = True
+                            elif (((case[3] == False and playedCase[3]) and (case[5] == False and playedCase[5]) 
+                                and (case[7] == False and playedCase[7])) or ((case[3] == False and playedCase[3]) 
+                                and (case[7] == False and playedCase[7]) and (case[5] == False and playedCase[5])) or
+                                ((case[5] == False and playedCase[5]) and (case[7] == False and playedCase[7]) 
+                                and (case[3] == False and playedCase[3]))):
+                                joueurWin = True
+                            elif (((case[3] == False and machineWin[3]) and (case[5] == False and machineWin[5]) 
+                                and (case[7] == False and machineWin[7])) or ((case[3] == False and machineWin[3]) 
+                                and (case[7] == False and machineWin[7]) and (case[5] == False and machineWin[5])) or
+                                ((case[5] == False and machineWin[5]) and (case[7] == False and machineWin[7]) 
+                                and (case[3] == False and machineWin[3]))):
+                                machineWin = True
+                            elif (((case[3] == False and playedCase[3]) and (case[6] == False and playedCase[6]) 
+                                and (case[9] == False and playedCase[9])) or ((case[3] == False and playedCase[3]) 
+                                and (case[9] == False and playedCase[9]) and (case[6] == False and playedCase[6])) or
+                                ((case[6] == False and playedCase[6]) and (case[9] == False and playedCase[9]) 
+                                and (case[3] == False and playedCase[3]))):
+                                joueurWin = True
+                            elif (((case[3] == False and machineWin[3]) and (case[6] == False and machineWin[6]) 
+                                and (case[9] == False and machineWin[9])) or ((case[3] == False and machineWin[3]) 
+                                and (case[9] == False and machineWin[9]) and (case[6] == False and machineWin[6])) or
+                                ((case[6] == False and machineWin[6]) and (case[9] == False and machineWin[9]) 
+                                and (case[3] == False and machineWin[3]))):
+                                machineWin = True
+                            elif (((case[2] == False and playedCase[2]) and (case[5] == False and playedCase[5]) 
+                                and (case[8] == False and playedCase[8])) or ((case[2] == False and playedCase[2]) 
+                                and (case[8] == False and playedCase[8]) and (case[5] == False and playedCase[5])) or
+                                ((case[5] == False and playedCase[5]) and (case[8] == False and playedCase[8]) 
+                                and (case[2] == False and playedCase[2]))):
+                                joueurWin = True
+                            elif (((case[2] == False and machineWin[2]) and (case[5] == False and machineWin[5]) 
+                                and (case[8] == False and machineWin[8])) or ((case[2] == False and machineWin[2]) 
+                                and (case[8] == False and machineWin[8]) and (case[5] == False and machineWin[5])) or
+                                ((case[5] == False and machineWin[5]) and (case[8] == False and machineWin[8]) 
+                                and (case[2] == False and machineWin[2]))):
+                                machineWin = True
+                            elif (((case[4] == False and playedCase[4]) and (case[5] == False and playedCase[5]) 
+                                and (case[6] == False and playedCase[6])) or ((case[4] == False and playedCase[4]) 
+                                and (case[6] == False and playedCase[6]) and (case[5] == False and playedCase[5])) or
+                                ((case[5] == False and playedCase[5]) and (case[6] == False and playedCase[6]) 
+                                and (case[4] == False and playedCase[4]))):
+                                joueurWin = True
+                            elif (((case[4] == False and machineWin[4]) and (case[5] == False and machineWin[5]) 
+                                and (case[6] == False and machineWin[6])) or ((case[4] == False and machineWin[4]) 
+                                and (case[6] == False and machineWin[6]) and (case[5] == False and machineWin[5])) or
+                                ((case[5] == False and machineWin[5]) and (case[6] == False and machineWin[6]) 
+                                and (case[4] == False and machineWin[4]))):
+                                machineWin = True
+                            elif (((case[7] == False and playedCase[7]) and (case[8] == False and playedCase[8]) 
+                                and (case[9] == False and playedCase[9])) or ((case[7] == False and playedCase[7]) 
+                                and (case[9] == False and playedCase[9]) and (case[8] == False and playedCase[8])) 
+                                or ((case[8] == False and playedCase[8]) and (case[9] == False and playedCase[9]) 
+                                and (case[7] == False and playedCase[7]))):
+                                joueurWin = True
+                            elif (((case[7] == False and machineWin[7]) and (case[8] == False and machineWin[8]) 
+                                and (case[9] == False and machineWin[9])) or ((case[7] == False and machineWin[7]) 
+                                and (case[9] == False and machineWin[9]) and (case[8] == False and machineWin[8])) 
+                                or ((case[8] == False and machineWin[8]) and (case[9] == False and machineWin[9]) 
+                                and (case[7] == False and machineWin[7]))):
+                                machineWin = True
+                            return joueurWin
