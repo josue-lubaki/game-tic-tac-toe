@@ -3,7 +3,7 @@ import random
 # importation des fichiers
 from Fonctional_Joueur import *
 from Fonctional_machine import *
-from Smart_Machine import Reflexion_Machine
+from Smart_Machine import *
 from Smart_Joueur import Reflexion_Joueur
 #********************************************************
 #               @Author : Josue Lubaki
@@ -31,6 +31,7 @@ Y = dimension[1]
 # of specific dimension..e(X, Y).
 fenetre_sortie = pygame.display.set_mode((X,Y))
 joueurWin = False
+machineWin = False
 
 # set the pygame window name and icon
 pygame.display.set_caption('TIC-TAC-TOE')
@@ -46,11 +47,12 @@ font = pygame.font.Font('freesansbold.ttf', 32)
 font_info = pygame.font.Font('freesansbold.ttf', 24) 
 
 # LOGIQUE DU MENU DU JEU @see ConfirmationQuitter
-Control_Quit = ConfirmationQuitter(pygame,fenetre_sortie,joueurWin)
+Control_Quit = ConfirmationQuitter(pygame,fenetre_sortie,joueurWin,machineWin)
 choixUser = Control_Quit[0]
 fin = Control_Quit[1]
 arret = Control_Quit[2]
 joueurWin = Control_Quit[3]
+machineWin = Control_Quit[4]
 
 # Connaitre le Joueur suivant à chaque tour
 PlayingJoueur = True # C'est tjrs les Users qui commencent... @True
@@ -94,7 +96,7 @@ while fin == True and arret == False:
                 mauvaisPointer = False
 
         # Si toutes les cases sont occupés, redemarrer Jeu
-        if ((case[1:] == [False,False, False,False,False,False,False,False,False]) or joueurWin):
+        if ((case[1:] == [False,False, False,False,False,False,False,False,False]) or joueurWin or machineWin):
             for event in pygame.event.get():    
                 # Creer une interface de confirmation | Continuer ou pas
                 pygame.display.update()
@@ -132,14 +134,16 @@ while fin == True and arret == False:
                         PlayingJoueur = True
                         PlayingMachine = False
                         joueurWin = False
+                        machineWin = False
                         break
                     elif rec_t2.collidepoint(position): # veux Sortir
                         # LOGIQUE DU MENU DU JEU
-                        Control_Quit = ConfirmationQuitter(pygame,fenetre,joueurWin)
+                        Control_Quit = ConfirmationQuitter(pygame,fenetre,joueurWin,machineWin)
                         choixUser = Control_Quit[0]
                         fin = Control_Quit[1]
                         arret = Control_Quit[2]
                         joueurWin = Control_Quit[3]
+                        machineWin = Control_Quit[4]
                         if fin == True and arret == True:
                             is_running = False
                             mauvaisPointer = False
@@ -160,15 +164,30 @@ while fin == True and arret == False:
                 # Quitter le jeu sur QUIT [X] ou la touche "Q"
                 is_running = False
                 # LOGIQUE DU MENU DU JEU
-                Control_Quit = ConfirmationQuitter(pygame,fenetre,joueurWin)
+                Control_Quit = ConfirmationQuitter(pygame,fenetre,joueurWin,machineWin)
                 choixUser = Control_Quit[0]
                 fin = Control_Quit[1]
                 arret = Control_Quit[2]
                 joueurWin = Control_Quit[3]
+                machineWin = Control_Quit[4]
                 if fin == True and arret == True:
                     is_running = False
                     score = 0
                     break
+
+           #Verifier si le Joueur a gagné
+            maFunc = VerifierGagnant(pygame,fenetre,case,choixUser,MachineCase,playedCase,PlayingMachine,PlayingJoueur,machine_Joue,joueurWin,machineWin)
+            joueurWin = maFunc[0]
+            machineWin = maFunc[1]
+            
+            if(machineWin):
+                print("La Machine a gagné")
+                fin = True
+                arret = False
+                rejouer = True
+                machineWin = False
+                PlayingJoueur = True
+                PlayingMachine = False
             
             if(joueurWin):
                 print("Le Joueur a gagné !")
@@ -180,7 +199,7 @@ while fin == True and arret == False:
                 demande = True
                 PlayingJoueur = True
                 PlayingMachine = False
-
+            
             # Au Tour du User de choisir une case vide
             Reflexion_User = Reflexion_Joueur(pygame,event,fenetre,case,choixUser,playedCase,
             PlayingJoueur,PlayingMachine,rec,font_info,rouge,blanc,dodger_blue,joueurWin,score)            
@@ -191,12 +210,13 @@ while fin == True and arret == False:
             # La Machine Reflechie, comment Gagner le jeu
             # ou au pire, comment contrer le Joueur
             Reflexion = Reflexion_Machine(pygame,fenetre,case,choixUser,
-            MachineCase,playedCase,PlayingMachine,PlayingJoueur,machine_Joue,switching_O,switching_X,random,joueurWin)
+            MachineCase,playedCase,PlayingMachine,PlayingJoueur,machine_Joue,switching_O,switching_X,random,joueurWin,machineWin)
             # Modifier le tour | Prochain Joueur
             PlayingMachine = Reflexion[0] # False
             PlayingJoueur = Reflexion[1] # True
             joueurWin = Reflexion[2]
-            
+            machineWin = Reflexion[3]
+
             # Mise à jour des contenues
             pygame.display.update()      
             horloge.tick()

@@ -5,7 +5,7 @@ from Fonctional_machine import machine_Joue, switching_O, switching_X
 # La Machine Reflechie, comment Gagner le jeu
 # ou au pire, comment contrer le Joueur
 
-def Reflexion_Machine(pygame,fenetre,case,choixUser,MachineCase,playedCase,PlayingMachine,PlayingJoueur,machine_Joue,switching_O,switching_X,random,joueurWin):
+def Reflexion_Machine(pygame,fenetre,case,choixUser,MachineCase,playedCase,PlayingMachine,PlayingJoueur,machine_Joue,switching_O,switching_X,random,joueurWin,machineWin):
             # S'il existe au moins une case vide | Tour Machine
             if ((case[1] == True or case[2] == True or case[3] == True or case[4] == True 
                 or case[5] == True or case[6] == True or case[7] == True or case[8] == True or
@@ -15,9 +15,11 @@ def Reflexion_Machine(pygame,fenetre,case,choixUser,MachineCase,playedCase,Playi
                     a = 1
 
                     #Verifier si le Joueur a gagné
-                    joueurWin = VerifierGagnant(pygame,fenetre,case,choixUser,MachineCase,playedCase,PlayingMachine,PlayingJoueur,machine_Joue,joueurWin)
-                    if(joueurWin):
-                        return [False,False,joueurWin]
+                    maFunc = VerifierGagnant(pygame,fenetre,case,choixUser,MachineCase,playedCase,PlayingMachine,PlayingJoueur,machine_Joue,joueurWin,machineWin)
+                    joueurWin = maFunc[0]
+                    machineWin = maFunc[1]
+                    if(joueurWin or machineWin):
+                        return [False,False,joueurWin,machineWin]
 
                     # Liste Case Vide
                     for a in range(len(case)):
@@ -36,6 +38,7 @@ def Reflexion_Machine(pygame,fenetre,case,choixUser,MachineCase,playedCase,Playi
                                 arretWhile = machinePlayed[2]
                                 if (arretWhile == True):
                                     MachineCase[i] = True
+                                    machineWin = True
                                     break
                                 i+=1
                         elif (((case[1] == False and MachineCase[1]) and (case[4] == False and MachineCase[4]) and case[7]) or 
@@ -49,6 +52,7 @@ def Reflexion_Machine(pygame,fenetre,case,choixUser,MachineCase,playedCase,Playi
                                 arretWhile = machinePlayed[2]
                                 if (arretWhile == True):
                                     MachineCase[i] = True
+                                    machineWin = True
                                     break
                                 i+=3
                         elif (((case[1] == False and MachineCase[1]) and (case[5] == False and MachineCase[5]) and case[9]) or 
@@ -62,6 +66,7 @@ def Reflexion_Machine(pygame,fenetre,case,choixUser,MachineCase,playedCase,Playi
                                 arretWhile = machinePlayed[2]
                                 if (arretWhile == True):
                                     MachineCase[i] = True
+                                    machineWin = True
                                     break
                                 i+=4
                         elif (((case[3] == False and MachineCase[3]) and (case[5] == False and MachineCase[5]) and case[7]) or 
@@ -75,6 +80,7 @@ def Reflexion_Machine(pygame,fenetre,case,choixUser,MachineCase,playedCase,Playi
                                 arretWhile = machinePlayed[2]
                                 if (arretWhile == True):
                                     MachineCase[i] = True
+                                    machineWin = True
                                     break
                                 i+=2
                         elif (((case[3] == False and MachineCase[3]) and (case[6] == False and MachineCase[6]) and case[9]) or 
@@ -88,6 +94,7 @@ def Reflexion_Machine(pygame,fenetre,case,choixUser,MachineCase,playedCase,Playi
                                 arretWhile = machinePlayed[2]
                                 if (arretWhile == True):
                                     MachineCase[i] = True
+                                    machineWin = True
                                     break
                                 i+=3
                         elif (((case[2] == False and MachineCase[2]) and (case[5] == False and MachineCase[5]) and case[8]) or 
@@ -101,6 +108,7 @@ def Reflexion_Machine(pygame,fenetre,case,choixUser,MachineCase,playedCase,Playi
                                 arretWhile = machinePlayed[2]
                                 if (arretWhile == True):
                                     MachineCase[i] = True
+                                    machineWin = True
                                     break
                                 i+=3
                         elif (((case[4] == False and MachineCase[4]) and (case[5] == False and MachineCase[5]) and case[6]) or 
@@ -114,6 +122,7 @@ def Reflexion_Machine(pygame,fenetre,case,choixUser,MachineCase,playedCase,Playi
                                 arretWhile = machinePlayed[2]
                                 if (arretWhile == True):
                                     MachineCase[i] = True
+                                    machineWin = True
                                     break
                                 i+=1
                         elif (((case[7] == False and MachineCase[7]) and (case[8] == False and MachineCase[8]) and case[9]) or 
@@ -127,6 +136,7 @@ def Reflexion_Machine(pygame,fenetre,case,choixUser,MachineCase,playedCase,Playi
                                 arretWhile = machinePlayed[2]
                                 if (arretWhile == True):
                                     MachineCase[i] = True
+                                    machineWin = True
                                     break
                                 i+=1
                         else:
@@ -267,7 +277,7 @@ def Reflexion_Machine(pygame,fenetre,case,choixUser,MachineCase,playedCase,Playi
                                             PlayingMachine = True
                                             print("Je ne sais pas sur quelle case dessinée")
             # A Qui le prochain tour @see return
-            return [PlayingMachine,PlayingJoueur,joueurWin]
+            return [PlayingMachine,PlayingJoueur,joueurWin,machineWin]
 
 def VerifierGagnant(pygame,fenetre,case,choixUser,MachineCase,playedCase,PlayingMachine,PlayingJoueur,machine_Joue,joueurWin, machineWin):
     # Verifier si le Joueur a gagné
@@ -276,10 +286,10 @@ def VerifierGagnant(pygame,fenetre,case,choixUser,MachineCase,playedCase,Playing
                                 and playedCase[3]) and (case[2] == False and playedCase[2])) or ((case[2] == False and playedCase[2]) 
                                 and (case[3] == False and playedCase[3]) and (case[1] == False and playedCase[1]))):
                                 joueurWin = True
-                            elif (((case[1] == False and machineWin[1]) and (case[2] == False and machineWin[2]) 
-                                and (case[3] == False and machineWin[3])) or ((case[1] == False and machineWin[1]) and (case[3] == False 
-                                and machineWin[3]) and (case[2] == False and machineWin[2])) or ((case[2] == False and machineWin[2]) 
-                                and (case[3] == False and machineWin[3]) and (case[1] == False and machineWin[1]))):
+                            elif (((case[1] == False and MachineCase[1]) and (case[2] == False and MachineCase[2]) 
+                                and (case[3] == False and MachineCase[3])) or ((case[1] == False and MachineCase[1]) and (case[3] == False 
+                                and MachineCase[3]) and (case[2] == False and MachineCase[2])) or ((case[2] == False and MachineCase[2]) 
+                                and (case[3] == False and MachineCase[3]) and (case[1] == False and MachineCase[1]))):
                                 machineWin = True
                             elif (((case[1] == False and playedCase[1]) and (case[4] == False and playedCase[4]) 
                                 and (case[7] == False and playedCase[7])) or ((case[1] == False and playedCase[1]) 
@@ -287,11 +297,11 @@ def VerifierGagnant(pygame,fenetre,case,choixUser,MachineCase,playedCase,Playing
                                 ((case[4] == False and playedCase[4]) and (case[7] == False and playedCase[7]) 
                                 and (case[1] == False and playedCase[1]))):
                                 joueurWin = True
-                            elif (((case[1] == False and machineWin[1]) and (case[4] == False and machineWin[4]) 
-                                and (case[7] == False and machineWin[7])) or ((case[1] == False and machineWin[1]) 
-                                and (case[7] == False and machineWin[7]) and (case[4] and machineWin[4])) or
-                                ((case[4] == False and machineWin[4]) and (case[7] == False and machineWin[7]) 
-                                and (case[1] == False and machineWin[1]))):
+                            elif (((case[1] == False and MachineCase[1]) and (case[4] == False and MachineCase[4]) 
+                                and (case[7] == False and MachineCase[7])) or ((case[1] == False and MachineCase[1]) 
+                                and (case[7] == False and MachineCase[7]) and (case[4] and MachineCase[4])) or
+                                ((case[4] == False and MachineCase[4]) and (case[7] == False and MachineCase[7]) 
+                                and (case[1] == False and MachineCase[1]))):
                                 machineWin = True
                             elif (((case[1] == False and playedCase[1]) and (case[5] == False and playedCase[5]) 
                                 and (case[9] == False and playedCase[9])) or ((case[1] == False and playedCase[1]) 
@@ -299,11 +309,11 @@ def VerifierGagnant(pygame,fenetre,case,choixUser,MachineCase,playedCase,Playing
                                 ((case[5] == False and playedCase[5]) and (case[9] == False and playedCase[9]) 
                                 and (case[1] == False and playedCase[1]))):
                                 joueurWin = True
-                            elif (((case[1] == False and machineWin[1]) and (case[5] == False and machineWin[5]) 
-                                and (case[9] == False and machineWin[9])) or ((case[1] == False and machineWin[1]) 
-                                and (case[9] == False and machineWin[9]) and (case[5] == False and machineWin[5])) or
-                                ((case[5] == False and machineWin[5]) and (case[9] == False and machineWin[9]) 
-                                and (case[1] == False and machineWin[1]))):
+                            elif (((case[1] == False and MachineCase[1]) and (case[5] == False and MachineCase[5]) 
+                                and (case[9] == False and MachineCase[9])) or ((case[1] == False and MachineCase[1]) 
+                                and (case[9] == False and MachineCase[9]) and (case[5] == False and MachineCase[5])) or
+                                ((case[5] == False and MachineCase[5]) and (case[9] == False and MachineCase[9]) 
+                                and (case[1] == False and MachineCase[1]))):
                                 machineWin = True
                             elif (((case[3] == False and playedCase[3]) and (case[5] == False and playedCase[5]) 
                                 and (case[7] == False and playedCase[7])) or ((case[3] == False and playedCase[3]) 
@@ -311,11 +321,11 @@ def VerifierGagnant(pygame,fenetre,case,choixUser,MachineCase,playedCase,Playing
                                 ((case[5] == False and playedCase[5]) and (case[7] == False and playedCase[7]) 
                                 and (case[3] == False and playedCase[3]))):
                                 joueurWin = True
-                            elif (((case[3] == False and machineWin[3]) and (case[5] == False and machineWin[5]) 
-                                and (case[7] == False and machineWin[7])) or ((case[3] == False and machineWin[3]) 
-                                and (case[7] == False and machineWin[7]) and (case[5] == False and machineWin[5])) or
-                                ((case[5] == False and machineWin[5]) and (case[7] == False and machineWin[7]) 
-                                and (case[3] == False and machineWin[3]))):
+                            elif (((case[3] == False and MachineCase[3]) and (case[5] == False and MachineCase[5]) 
+                                and (case[7] == False and MachineCase[7])) or ((case[3] == False and MachineCase[3]) 
+                                and (case[7] == False and MachineCase[7]) and (case[5] == False and MachineCase[5])) or
+                                ((case[5] == False and MachineCase[5]) and (case[7] == False and MachineCase[7]) 
+                                and (case[3] == False and MachineCase[3]))):
                                 machineWin = True
                             elif (((case[3] == False and playedCase[3]) and (case[6] == False and playedCase[6]) 
                                 and (case[9] == False and playedCase[9])) or ((case[3] == False and playedCase[3]) 
@@ -323,11 +333,11 @@ def VerifierGagnant(pygame,fenetre,case,choixUser,MachineCase,playedCase,Playing
                                 ((case[6] == False and playedCase[6]) and (case[9] == False and playedCase[9]) 
                                 and (case[3] == False and playedCase[3]))):
                                 joueurWin = True
-                            elif (((case[3] == False and machineWin[3]) and (case[6] == False and machineWin[6]) 
-                                and (case[9] == False and machineWin[9])) or ((case[3] == False and machineWin[3]) 
-                                and (case[9] == False and machineWin[9]) and (case[6] == False and machineWin[6])) or
-                                ((case[6] == False and machineWin[6]) and (case[9] == False and machineWin[9]) 
-                                and (case[3] == False and machineWin[3]))):
+                            elif (((case[3] == False and MachineCase[3]) and (case[6] == False and MachineCase[6]) 
+                                and (case[9] == False and MachineCase[9])) or ((case[3] == False and MachineCase[3]) 
+                                and (case[9] == False and MachineCase[9]) and (case[6] == False and MachineCase[6])) or
+                                ((case[6] == False and MachineCase[6]) and (case[9] == False and MachineCase[9]) 
+                                and (case[3] == False and MachineCase[3]))):
                                 machineWin = True
                             elif (((case[2] == False and playedCase[2]) and (case[5] == False and playedCase[5]) 
                                 and (case[8] == False and playedCase[8])) or ((case[2] == False and playedCase[2]) 
@@ -335,11 +345,11 @@ def VerifierGagnant(pygame,fenetre,case,choixUser,MachineCase,playedCase,Playing
                                 ((case[5] == False and playedCase[5]) and (case[8] == False and playedCase[8]) 
                                 and (case[2] == False and playedCase[2]))):
                                 joueurWin = True
-                            elif (((case[2] == False and machineWin[2]) and (case[5] == False and machineWin[5]) 
-                                and (case[8] == False and machineWin[8])) or ((case[2] == False and machineWin[2]) 
-                                and (case[8] == False and machineWin[8]) and (case[5] == False and machineWin[5])) or
-                                ((case[5] == False and machineWin[5]) and (case[8] == False and machineWin[8]) 
-                                and (case[2] == False and machineWin[2]))):
+                            elif (((case[2] == False and MachineCase[2]) and (case[5] == False and MachineCase[5]) 
+                                and (case[8] == False and MachineCase[8])) or ((case[2] == False and MachineCase[2]) 
+                                and (case[8] == False and MachineCase[8]) and (case[5] == False and MachineCase[5])) or
+                                ((case[5] == False and MachineCase[5]) and (case[8] == False and MachineCase[8]) 
+                                and (case[2] == False and MachineCase[2]))):
                                 machineWin = True
                             elif (((case[4] == False and playedCase[4]) and (case[5] == False and playedCase[5]) 
                                 and (case[6] == False and playedCase[6])) or ((case[4] == False and playedCase[4]) 
@@ -347,11 +357,11 @@ def VerifierGagnant(pygame,fenetre,case,choixUser,MachineCase,playedCase,Playing
                                 ((case[5] == False and playedCase[5]) and (case[6] == False and playedCase[6]) 
                                 and (case[4] == False and playedCase[4]))):
                                 joueurWin = True
-                            elif (((case[4] == False and machineWin[4]) and (case[5] == False and machineWin[5]) 
-                                and (case[6] == False and machineWin[6])) or ((case[4] == False and machineWin[4]) 
-                                and (case[6] == False and machineWin[6]) and (case[5] == False and machineWin[5])) or
-                                ((case[5] == False and machineWin[5]) and (case[6] == False and machineWin[6]) 
-                                and (case[4] == False and machineWin[4]))):
+                            elif (((case[4] == False and MachineCase[4]) and (case[5] == False and MachineCase[5]) 
+                                and (case[6] == False and MachineCase[6])) or ((case[4] == False and MachineCase[4]) 
+                                and (case[6] == False and MachineCase[6]) and (case[5] == False and MachineCase[5])) or
+                                ((case[5] == False and MachineCase[5]) and (case[6] == False and MachineCase[6]) 
+                                and (case[4] == False and MachineCase[4]))):
                                 machineWin = True
                             elif (((case[7] == False and playedCase[7]) and (case[8] == False and playedCase[8]) 
                                 and (case[9] == False and playedCase[9])) or ((case[7] == False and playedCase[7]) 
@@ -359,10 +369,10 @@ def VerifierGagnant(pygame,fenetre,case,choixUser,MachineCase,playedCase,Playing
                                 or ((case[8] == False and playedCase[8]) and (case[9] == False and playedCase[9]) 
                                 and (case[7] == False and playedCase[7]))):
                                 joueurWin = True
-                            elif (((case[7] == False and machineWin[7]) and (case[8] == False and machineWin[8]) 
-                                and (case[9] == False and machineWin[9])) or ((case[7] == False and machineWin[7]) 
-                                and (case[9] == False and machineWin[9]) and (case[8] == False and machineWin[8])) 
-                                or ((case[8] == False and machineWin[8]) and (case[9] == False and machineWin[9]) 
-                                and (case[7] == False and machineWin[7]))):
+                            elif (((case[7] == False and MachineCase[7]) and (case[8] == False and MachineCase[8]) 
+                                and (case[9] == False and MachineCase[9])) or ((case[7] == False and MachineCase[7]) 
+                                and (case[9] == False and MachineCase[9]) and (case[8] == False and MachineCase[8])) 
+                                or ((case[8] == False and MachineCase[8]) and (case[9] == False and MachineCase[9]) 
+                                and (case[7] == False and MachineCase[7]))):
                                 machineWin = True
-                            return joueurWin
+                            return [joueurWin,machineWin]

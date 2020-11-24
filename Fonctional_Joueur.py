@@ -84,7 +84,7 @@ def AskChoixUser(pygame,event,fenetre,rec_1,rec_2):
     return [result,fin]
 
 
-def ConfirmationQuitter(pygame,fenetre_sortie,joueurWin):
+def ConfirmationQuitter(pygame,fenetre_sortie,joueurWin,machineWin):
     # Dimension fenetre
     dimension = DimensionFenetre()
     X = dimension[0]
@@ -186,6 +186,7 @@ def ConfirmationQuitter(pygame,fenetre_sortie,joueurWin):
                         arret = False
                         go_out = True
                         joueurWin = False
+                        machineWin = False
                     else:
                         fin = False
                         arret = True
@@ -199,6 +200,6 @@ def ConfirmationQuitter(pygame,fenetre_sortie,joueurWin):
                     choixUser = "X" # Par default
             pygame.display.update()
             horloge.tick()
-    return [choixUser,fin,arret,joueurWin]
+    return [choixUser,fin,arret,joueurWin,machineWin]
 
 
