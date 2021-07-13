@@ -27,3 +27,12 @@ Mais malheureusement, nous avons réécrit le même code un peu plus tard dans l
     g. Votre code doit permettre de sortir de jeu dès que l’utilisateur touche la touche q sur clavier. En poussant la touche q sur le clavier,
         le jeu doit afficher un menu demandant à l’utilisateur s’il ou elle veut quitter le jeu (avec un choit de oui ou non).
         Si l’utilisateur sélectionne oui le jeu s’arrête. Sinon le jeu continue (1 point).
+        
+<p> 
+   <img src="https://github.com/josue-lubaki/game-tic-tac-toe/blob/Josue/image/image_1.png" width=400px height=360px>___
+   <img src="https://github.com/josue-lubaki/game-tic-tac-toe/blob/Josue/image/image_2.png" width=400px height=360px>
+</p>
+<p>
+   <img src="https://github.com/josue-lubaki/game-tic-tac-toe/blob/Josue/image/image_3.png" width=400px height=360px>___
+   <img src="https://github.com/josue-lubaki/game-tic-tac-toe/blob/Josue/image/image_4.png" width=400px height=360px>
+</p>
